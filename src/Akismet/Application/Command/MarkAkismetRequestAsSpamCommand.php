@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\MarkAk
 /**
  * @see MarkAkismetRequestAsSpamCommandHandler::__invoke()
  */
-final class MarkAkismetRequestAsSpamCommand implements SynchronousCommandInterface
+final class MarkAkismetRequestAsSpamCommand implements SynchronousMessageInterface
 {
     private int $id;
 

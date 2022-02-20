@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\Activa
 /**
  * @see ActivateAkismetConfigurationCommandHandler::__invoke()
  */
-final class ActivateAkismetConfigurationCommand implements SynchronousCommandInterface
+final class ActivateAkismetConfigurationCommand implements SynchronousMessageInterface
 {
     private int $id;
 

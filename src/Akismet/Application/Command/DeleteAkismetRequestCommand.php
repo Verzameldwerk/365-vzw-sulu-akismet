@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\Delete
 /**
  * @see DeleteAkismetRequestCommandHandler::__invoke()
  */
-final class DeleteAkismetRequestCommand implements SynchronousCommandInterface
+final class DeleteAkismetRequestCommand implements SynchronousMessageInterface
 {
     private int $id;
 

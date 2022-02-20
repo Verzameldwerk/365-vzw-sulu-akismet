@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\MarkAk
 /**
  * @see MarkAkismetRequestAsHamCommandHandler::__invoke()
  */
-final class MarkAkismetRequestAsHamCommand implements SynchronousCommandInterface
+final class MarkAkismetRequestAsHamCommand implements SynchronousMessageInterface
 {
     private int $id;
 

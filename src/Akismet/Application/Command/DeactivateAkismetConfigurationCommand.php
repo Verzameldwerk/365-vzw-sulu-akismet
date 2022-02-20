@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\Deacti
 /**
  * @see DeactivateAkismetConfigurationCommandHandler::__invoke()
  */
-final class DeactivateAkismetConfigurationCommand implements SynchronousCommandInterface
+final class DeactivateAkismetConfigurationCommand implements SynchronousMessageInterface
 {
     private int $id;
 

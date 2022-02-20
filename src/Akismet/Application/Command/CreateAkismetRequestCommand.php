@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\Create
 /**
  * @see CreateAkismetRequestCommandHandler::__invoke()
  */
-final class CreateAkismetRequestCommand implements AsynchronousCommandInterface
+final class CreateAkismetRequestCommand implements AsynchronousMessageInterface
 {
     private int $formId;
 

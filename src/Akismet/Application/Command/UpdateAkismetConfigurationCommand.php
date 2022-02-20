@@ -9,7 +9,7 @@ use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\Update
 /**
  * @see UpdateAkismetConfigurationCommandHandler::__invoke()
  */
-final class UpdateAkismetConfigurationCommand implements SynchronousCommandInterface
+final class UpdateAkismetConfigurationCommand implements SynchronousMessageInterface
 {
     private int $id;
 
