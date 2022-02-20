@@ -72,8 +72,8 @@ config.module.rules.unshift({
 8. Update your javascript build using `bin/console sulu:admin:update-build`.
 When asked to overwrite your local version of "package.json", answer with no.
 
-9. Update your database schema using either `bin/console doctrine:schema:update --force`
-or `bin/console doctrine:schema:diff` if you are using the `DoctrineMigrationsBundle`.
+9. Update your database schema using `bin/console doctrine:schema:update --force`
+or generate a migration using `bin/console doctrine:migrations:diff` if you are using the `DoctrineMigrationsBundle`.
 
 ## Configuration
 
