@@ -88,6 +88,16 @@ final class VerzameldwerkAkismetExtension extends Extension implements PrependEx
 
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (!\array_key_exists('SuluFormBundle', $bundles)) {
+            throw new \LogicException('The VerzameldwerkAkismetBundle requires the SuluFormBundle to be enabled');
+        }
+
+        if (!\array_key_exists('HandcraftedInTheAlpsSuluResourceBundle', $bundles)) {
+            throw new \LogicException('The VerzameldwerkAkismetBundle requires the HandcraftedInTheAlpsSuluResourceBundle to be enabled');
+        }
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 

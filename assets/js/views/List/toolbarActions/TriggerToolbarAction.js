@@ -1,11 +1,14 @@
 // @flow
 import React from 'react';
-import {computed} from 'mobx';
+import {computed, action, observable} from 'mobx';
+import {observer} from 'mobx-react';
 import {ResourceRequester} from 'sulu-admin-bundle/services';
 import {translate} from 'sulu-admin-bundle/utils';
 import {AbstractListToolbarAction} from 'sulu-admin-bundle/views';
 
 class TriggerToolbarAction extends AbstractListToolbarAction {
+    @observable loading: boolean = false;
+
     @computed get label(): string {
         const {label} = this.options;
 
@@ -42,11 +45,17 @@ class TriggerToolbarAction extends AbstractListToolbarAction {
             label: this.label,
             icon: this.icon,
             onClick: () => void this.handleClick(),
+            disabled: this.listStore.selectionIds.length === 0,
+            loading: this.loading,
         };
     }
 
+    @action setLoading = (loading: boolean) => {
+        this.loading = loading;
+    }
+
     handleClick = async () => {
-        this.listStore.setDataLoading(true);
+        this.setLoading(true);
         const promises = [];
 
         this.listStore.selectionIds.forEach(id => {
@@ -58,6 +67,7 @@ class TriggerToolbarAction extends AbstractListToolbarAction {
         await Promise.all(promises);
         this.listStore.reload();
         this.listStore.clearSelection();
+        this.setLoading(false);
     }
 }
 

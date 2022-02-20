@@ -1,6 +1,6 @@
 {
     "name": "verzameldwerk/akismet-bundle",
-    "type": "symfony-bundle",
+    "type": "sulu-bundle",
     "description": "This bundle provides an Akismet integration with the SuluFormBundle",
     "license": "MIT",
     "require": {

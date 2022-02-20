@@ -37,13 +37,13 @@ final class AkismetRequestAdmin extends Admin
         if ($this->securityChecker->hasPermission(AkismetRequestInterface::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
             $toolbarActions[] = new ToolbarAction('verzameldwerk_akismet.trigger', [
                 'label' => 'verzameldwerk_akismet.mark_as_spam',
-                'icon' => 'fa-ban',
+                'icon' => 'su-ban',
                 'action' => 'markAsSpam',
             ]);
 
             $toolbarActions[] = new ToolbarAction('verzameldwerk_akismet.trigger', [
                 'label' => 'verzameldwerk_akismet.mark_as_ham',
-                'icon' => 'fa-check',
+                'icon' => 'su-check-circle',
                 'action' => 'markAsHam',
             ]);
         }

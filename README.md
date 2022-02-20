@@ -2,14 +2,33 @@
 
 ## Installation
 
-1. Add the following lines to your `config/bundles.php` file:
+1. Add the following to your `composer.json` file:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:luca-rath/akismet-bundle.git"
+        }
+    ]
+}
+```
+
+2. Run the following command in your project's root directory:
+
+```shell
+composer require verzameldwerk/akismet-bundle:"dev-main"
+```
+
+3. Add the following lines to your `config/bundles.php` file:
 
 ```php
 HandcraftedInTheAlps\Bundle\SuluResourceBundle\HandcraftedInTheAlpsSuluResourceBundle::class => ['all' => true],
 Verzameldwerk\Bundle\AkismetBundle\VerzameldwerkAkismetBundle::class => ['all' => true],
 ```
 
-2. Create a new `config/routes/verzameldwerk_akismet.yaml` file with the following content:
+4. Create a new `config/routes/verzameldwerk_akismet_admin.yaml` file with the following content:
 
 ```yaml
 verzameldwerk_akismet_api:
@@ -18,7 +37,7 @@ verzameldwerk_akismet_api:
     prefix: /admin/api
 ```
 
-3. Add the following dependency to your `assets/admin/package.json` file:
+5. Add the following dependency to your `assets/admin/package.json` file:
 
 ```json
 {
@@ -28,13 +47,13 @@ verzameldwerk_akismet_api:
 }
 ```
 
-4. Add the following line to your `assets/admin/app.js` file:
+6. Add the following line to your `assets/admin/app.js` file:
 
 ```javascript
 import 'verzameldwerk-akismet-bundle';
 ```
 
-5. Add the following lines to your `assets/admin/webpack.config.js` file right before returning the `config` object:
+7. Add the following lines to your `assets/admin/webpack.config.js` file right before returning the `config` object:
 
 ```javascript
 config.module.rules.unshift({
@@ -50,10 +69,10 @@ config.module.rules.unshift({
 });
 ```
 
-6. Update your javascript build using `bin/console sulu:admin:update-build`.
+8. Update your javascript build using `bin/console sulu:admin:update-build`.
 When asked to overwrite your local version of "package.json", answer with no.
 
-7. Update your database schema using either `bin/console doctrine:schema:update --force`
+9. Update your database schema using either `bin/console doctrine:schema:update --force`
 or `bin/console doctrine:schema:diff` if you are using the `DoctrineMigrationsBundle`.
 
 ## Configuration
