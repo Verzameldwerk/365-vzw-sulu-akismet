@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>akismet_requests</key>
+
+    <joins name="akismetConfiguration">
+        <join>
+            <entity-name>%sulu.model.akismet_configuration.class%</entity-name>
+            <field-name>%sulu.model.akismet_request.class%.akismetConfiguration</field-name>
+        </join>
+    </joins>
+
+    <joins name="changer">
+        <join>
+            <entity-name>%sulu.model.user.class%</entity-name>
+            <field-name>%sulu.model.akismet_request.class%.changer</field-name>
+        </join>
+        <join>
+            <entity-name>%sulu.model.contact.class%</entity-name>
+            <field-name>%sulu.model.user.class%.contact</field-name>
+        </join>
+    </joins>
+
+    <properties>
+        <property name="id" translation="sulu_admin.id" visibility="no">
+            <field-name>id</field-name>
+            <entity-name>%sulu.model.akismet_request.class%</entity-name>
+        </property>
+
+        <property name="formId" visibility="never">
+            <field-name>form</field-name>
+            <entity-name>%sulu.model.akismet_configuration.class%</entity-name>
+            <joins ref="akismetConfiguration"/>
+        </property>
+
+        <property name="requestParams" visibility="never">
+            <field-name>requestParams</field-name>
+            <entity-name>%sulu.model.akismet_request.class%</entity-name>
+        </property>
+
+        <property name="_blog" translation="verzameldwerk_akismet.blog" visibility="no" sortable="false"/>
+        <property name="_comment_type" translation="verzameldwerk_akismet.comment_type" visibility="no" sortable="false"/>
+        <property name="_comment_date_gmt" translation="verzameldwerk_akismet.comment_date_gmt" visibility="yes" sortable="false" type="datetime"/>
+        <property name="_comment_author" translation="verzameldwerk_akismet.comment_author" visibility="yes" sortable="false"/>
+        <property name="_comment_author_email" translation="verzameldwerk_akismet.comment_author_email" visibility="yes" sortable="false"/>
+        <property name="_comment_content" translation="verzameldwerk_akismet.comment_content" visibility="yes" sortable="false"/>
+        <property name="_blog_lang" translation="verzameldwerk_akismet.blog_lang" visibility="no" sortable="false"/>
+        <property name="_honeypot_field_name" translation="verzameldwerk_akismet.honeypot_field_name" visibility="no" sortable="false"/>
+        <property name="_honeypot_field_value" translation="verzameldwerk_akismet.honeypot_field_value" visibility="no" sortable="false"/>
+        <property name="_user_ip" translation="verzameldwerk_akismet.user_ip" visibility="no" sortable="false"/>
+        <property name="_user_agent" translation="verzameldwerk_akismet.user_agent" visibility="no" sortable="false"/>
+        <property name="_referrer" translation="verzameldwerk_akismet.referrer" visibility="no" sortable="false"/>
+        <property name="_permalink" translation="verzameldwerk_akismet.permalink" visibility="no" sortable="false"/>
+
+        <property name="spam" translation="verzameldwerk_akismet.spam" visibility="always">
+            <field-name>spam</field-name>
+            <entity-name>%sulu.model.akismet_request.class%</entity-name>
+            <transformer type="bool"/>
+            <filter type="boolean" />
+        </property>
+
+        <concatenation-property name="changer" translation="sulu_admin.changer" visibility="no">
+            <field>
+                <field-name>firstName</field-name>
+                <entity-name>%sulu.model.contact.class%</entity-name>
+
+                <joins ref="changer"/>
+            </field>
+            <field>
+                <field-name>lastName</field-name>
+                <entity-name>%sulu.model.contact.class%</entity-name>
+
+                <joins ref="changer"/>
+            </field>
+        </concatenation-property>
+
+        <property name="changed" translation="sulu_admin.changed" visibility="no">
+            <field-name>changed</field-name>
+            <entity-name>%sulu.model.akismet_request.class%</entity-name>
+            <transformer type="datetime"/>
+            <filter type="datetime" />
+        </property>
+
+        <property name="created" translation="sulu_admin.created" visibility="no">
+            <field-name>created</field-name>
+            <entity-name>%sulu.model.akismet_request.class%</entity-name>
+            <transformer type="datetime"/>
+            <filter type="datetime" />
+        </property>
+    </properties>
+</list>

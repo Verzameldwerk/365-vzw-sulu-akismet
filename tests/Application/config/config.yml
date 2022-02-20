@@ -1,0 +1,13 @@
+swiftmailer:
+    disable_delivery:  true
+
+# custom
+sulu_form:
+    mail:
+        from: "admin@localhost"
+        to: "admin@localhost"
+        sender: "admin@localhost"
+
+    honeypot:
+        field: honeypot_field
+        strategy: no_save

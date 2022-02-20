@@ -1,0 +1,92 @@
+{
+    "name": "verzameldwerk/akismet-bundle",
+    "type": "symfony-bundle",
+    "description": "This bundle provides an Akismet integration with the SuluFormBundle",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "handcraftedinthealps/sulu-resource-bundle": "^0.2.2",
+        "sulu/form-bundle": "^2.3",
+        "sulu/sulu": "^2.4",
+        "symfony/dependency-injection": "^5.4 || ^6.0",
+        "symfony/http-kernel": "^5.4 || ^6.0",
+        "symfony/messenger": "^5.4 || ^6.0"
+    },
+    "require-dev": {
+        "dantleech/phpcr-migrations-bundle": "^1.2",
+        "friendsofphp/php-cs-fixer": "^3.5",
+        "friendsofsymfony/jsrouting-bundle": "^2.5.1 || ^3.0",
+        "handcraftedinthealps/code-coverage-checker": "^0.2.5",
+        "handcraftedinthealps/zendsearch": "^2.1",
+        "jackalope/jackalope-doctrine-dbal": "^1.7",
+        "jangregor/phpstan-prophecy": "^1.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-doctrine": "^1.2",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-symfony": "^1.1",
+        "phpstan/phpstan-webmozart-assert": "^1.0",
+        "qossmic/deptrac-shim": "^0.19.3",
+        "symfony/dotenv": "^5.4 || ^6.0",
+        "symfony/error-handler": "^5.4 || ^6.0",
+        "symfony/phpunit-bridge": "^5.4 || ^6.0",
+        "thecodingmachine/phpstan-strict-rules": "^1.0"
+    },
+    "scripts": {
+        "bootstrap-test-environment": [
+            "@php tests/Application/bin/adminconsole doctrine:database:drop --if-exists --force --env test",
+            "@php tests/Application/bin/adminconsole doctrine:database:create --env test",
+            "@php tests/Application/bin/adminconsole doctrine:schema:update --force --env test"
+        ],
+        "lint": [
+            "@phpstan",
+            "@php-cs",
+            "@lint-twig",
+            "@lint-yaml",
+            "@lint-container",
+            "@lint-composer",
+            "@lint-doctrine",
+            "@deptrac"
+        ],
+        "phpstan": [
+            "@php tests/Application/bin/adminconsole cache:warmup --env test",
+            "@php vendor/bin/phpstan analyze"
+        ],
+        "php-cs": "@php vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+        "php-cs-fix": "@php vendor/bin/php-cs-fixer fix",
+        "lint-composer": "@composer validate --strict",
+        "lint-twig": "@php tests/Application/bin/adminconsole lint:twig tests/Application/templates",
+        "lint-yaml": "@php tests/Application/bin/adminconsole lint:yaml config tests/Application/config",
+        "lint-container": [
+            "@php tests/Application/bin/adminconsole lint:container --env dev",
+            "@php tests/Application/bin/websiteconsole lint:container --env dev",
+            "@php tests/Application/bin/adminconsole lint:container --env test",
+            "@php tests/Application/bin/websiteconsole lint:container --env test",
+            "@php tests/Application/bin/adminconsole lint:container --env stage",
+            "@php tests/Application/bin/websiteconsole lint:container --env stage",
+            "@php tests/Application/bin/adminconsole lint:container --env prod",
+            "@php tests/Application/bin/websiteconsole lint:container --env prod"
+        ],
+        "lint-doctrine": [
+            "@php tests/Application/bin/adminconsole doctrine:schema:validate --skip-sync"
+        ],
+        "deptrac": "@php vendor/bin/deptrac",
+        "test": "echo \"Test setup missing\""
+    },
+    "autoload": {
+        "psr-4": {
+            "Verzameldwerk\\Bundle\\AkismetBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Verzameldwerk\\Bundle\\AkismetBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    }
+}

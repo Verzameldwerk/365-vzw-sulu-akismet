@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults>
+            <tag name="messenger.message_handler" bus="verzameldwerk_akismet.command_bus"/>
+        </defaults>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\ActivateAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\CreateAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_data_mapper"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\CreateAkismetRequestCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_request_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\DeactivateAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\DeleteAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\DeleteAkismetRequestCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_request_repository"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\MarkAkismetRequestAsHamCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_request_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\MarkAkismetRequestAsSpamCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_request_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\UpdateAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_data_mapper"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_api"/>
+        </service>
+    </services>
+</container>

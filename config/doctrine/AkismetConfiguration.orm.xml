@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfiguration" table="vw_akismet_configurations">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="active" column="active" type="boolean" nullable="false"/>
+        <field name="siteUrl" column="siteUrl" type="string" nullable="true" length="191"/>
+        <field name="apiKey" column="apiKey" type="string" nullable="true" length="191"/>
+
+        <one-to-one field="form" target-entity="Sulu\Bundle\FormBundle\Entity\Form">
+            <join-column name="formId" referenced-column-name="id" on-delete="CASCADE" nullable="false" unique="true"/>
+        </one-to-one>
+    </mapped-superclass>
+</doctrine-mapping>

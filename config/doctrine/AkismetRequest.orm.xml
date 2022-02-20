@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetRequest" table="vw_akismet_requests">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="requestParams" column="requestParams" type="json" nullable="false"/>
+        <field name="spam" column="spam" type="boolean" nullable="false"/>
+
+        <many-to-one field="akismetConfiguration" target-entity="Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface">
+            <join-column name="akismetConfigurationId" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
+        </many-to-one>
+    </mapped-superclass>
+</doctrine-mapping>

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>akismet_configuration</key>
+
+    <properties>
+        <property name="siteUrl" type="url">
+            <meta>
+                <title>verzameldwerk_akismet.site_url</title>
+            </meta>
+
+            <params>
+                <param name="defaults" type="collection">
+                    <param name="scheme" value="https://"/>
+                </param>
+
+                <param name="schemes" type="collection">
+                    <param name="http://"/>
+                    <param name="https://"/>
+                </param>
+            </params>
+        </property>
+
+        <property name="apiKey" type="text_line">
+            <meta>
+                <title>verzameldwerk_akismet.api_key</title>
+            </meta>
+        </property>
+    </properties>
+</form>
