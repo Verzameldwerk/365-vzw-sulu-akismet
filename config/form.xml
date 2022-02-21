@@ -8,6 +8,7 @@
             <argument type="service" id="verzameldwerk_akismet.command_bus"/>
             <argument type="service" id="verzameldwerk_akismet.akismet_params_resolver"/>
             <argument type="service" id="monolog.logger" on-invalid="null"/>
+            <argument>%kernel.debug%</argument>
 
             <tag name="form.type_extension"/>
         </service>

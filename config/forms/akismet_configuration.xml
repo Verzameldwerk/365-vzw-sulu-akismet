@@ -28,5 +28,49 @@
                 <title>verzameldwerk_akismet.api_key</title>
             </meta>
         </property>
+
+        <section name="fieldMapping">
+            <meta>
+                <title>verzameldwerk_akismet.field_mapping</title>
+            </meta>
+
+            <properties>
+                <property name="authorNameField" type="single_form_field_selection">
+                    <meta>
+                        <title>verzameldwerk_akismet.author_name_field</title>
+                    </meta>
+
+                    <params>
+                        <param name="resource_store_properties_to_request" type="collection">
+                            <param name="formId" value="formId"/>
+                        </param>
+                    </params>
+                </property>
+
+                <property name="authorEmailField" type="single_form_field_selection">
+                    <meta>
+                        <title>verzameldwerk_akismet.author_email_field</title>
+                    </meta>
+
+                    <params>
+                        <param name="resource_store_properties_to_request" type="collection">
+                            <param name="formId" value="formId"/>
+                        </param>
+                    </params>
+                </property>
+
+                <property name="contentField" type="single_form_field_selection">
+                    <meta>
+                        <title>verzameldwerk_akismet.content_field</title>
+                    </meta>
+
+                    <params>
+                        <param name="resource_store_properties_to_request" type="collection">
+                            <param name="formId" value="formId"/>
+                        </param>
+                    </params>
+                </property>
+            </properties>
+        </section>
     </properties>
 </form>

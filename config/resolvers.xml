@@ -5,6 +5,7 @@
     <services>
         <service id="verzameldwerk_akismet.akismet_params_resolver"
                  class="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Resolver\AkismetParamsResolver">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
             <argument type="service" id="request_stack"/>
             <argument on-invalid="null">%sulu_form.honeypot_field%</argument>
         </service>

@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Exception\ModelNotFoundException;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetRequestInterface;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\UserInterface\Controller\Admin\AkismetFormFieldController;
 
 final class VerzameldwerkAkismetExtension extends Extension implements PrependExtensionInterface
 {
@@ -65,6 +66,30 @@ final class VerzameldwerkAkismetExtension extends Extension implements PrependEx
                             'routes' => [
                                 'list' => 'verzameldwerk_akismet.get_akismet-requests',
                                 'detail' => 'verzameldwerk_akismet.get_akismet-request',
+                            ],
+                        ],
+                        AkismetFormFieldController::RESOURCE_KEY => [
+                            'routes' => [
+                                'list' => 'verzameldwerk_akismet.get_akismet-form-fields',
+                                'detail' => 'verzameldwerk_akismet.get_akismet-form-field',
+                            ],
+                        ],
+                    ],
+                    'field_type_options' => [
+                        'single_selection' => [
+                            'single_form_field_selection' => [
+                                'default_type' => 'list_overlay',
+                                'resource_key' => AkismetFormFieldController::RESOURCE_KEY,
+                                'types' => [
+                                    'list_overlay' => [
+                                        'adapter' => 'table',
+                                        'list_key' => AkismetFormFieldController::LIST_KEY,
+                                        'display_properties' => ['title'],
+                                        'empty_text' => 'verzameldwerk_akismet.no_form_field_selected',
+                                        'icon' => 'su-tree-list',
+                                        'overlay_title' => 'sulu_form.select_form_field',
+                                    ],
+                                ],
                             ],
                         ],
                     ],

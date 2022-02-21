@@ -14,5 +14,17 @@
         <one-to-one field="form" target-entity="Sulu\Bundle\FormBundle\Entity\Form">
             <join-column name="formId" referenced-column-name="id" on-delete="CASCADE" nullable="false" unique="true"/>
         </one-to-one>
+
+        <many-to-one field="authorNameField" target-entity="Sulu\Bundle\FormBundle\Entity\FormField">
+            <join-column name="authorNameFieldId" referenced-column-name="id" on-delete="SET NULL" nullable="true" unique="false"/>
+        </many-to-one>
+
+        <many-to-one field="authorEmailField" target-entity="Sulu\Bundle\FormBundle\Entity\FormField">
+            <join-column name="authorEmailFieldId" referenced-column-name="id" on-delete="SET NULL" nullable="true" unique="false"/>
+        </many-to-one>
+
+        <many-to-one field="contentField" target-entity="Sulu\Bundle\FormBundle\Entity\FormField">
+            <join-column name="contentFieldId" referenced-column-name="id" on-delete="SET NULL" nullable="true" unique="false"/>
+        </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

@@ -21,15 +21,18 @@ final class AkismetFormTypeExtension extends AbstractTypeExtension
     private MessageBusInterface $messageBus;
     private AkismetParamsResolverInterface $paramsResolver;
     private ?LoggerInterface $logger;
+    private bool $debug;
 
     public function __construct(
         MessageBusInterface $messageBus,
         AkismetParamsResolverInterface $paramsResolver,
-        ?LoggerInterface $logger
+        ?LoggerInterface $logger,
+        bool $debug
     ) {
         $this->messageBus = $messageBus;
         $this->paramsResolver = $paramsResolver;
         $this->logger = $logger;
+        $this->debug = $debug;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -47,14 +50,18 @@ final class AkismetFormTypeExtension extends AbstractTypeExtension
                 return;
             }
 
-            $params = $this->paramsResolver->resolve($form);
-
             try {
+                $params = $this->paramsResolver->resolve($form, $suluFormId);
+
                 /* @see CreateAkismetRequestCommandHandler::__invoke() */
                 $this->messageBus->dispatch(
                     new CreateAkismetRequestCommand($suluFormId, $params)
                 );
-            } catch (\Throwable $e) { // @phpstan-ignore-line
+            } catch (\Throwable $e) {
+                if ($this->debug) {
+                    throw $e;
+                }
+
                 if (null !== $this->logger) {
                     $this->logger->error($e->getMessage(), ['exception' => $e]);
                 }

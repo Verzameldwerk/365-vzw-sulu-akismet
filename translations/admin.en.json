@@ -20,5 +20,11 @@
     "verzameldwerk_akismet.referrer": "Referrer",
     "verzameldwerk_akismet.permalink": "Permalink",
     "verzameldwerk_akismet.mark_as_spam": "Mark as spam",
-    "verzameldwerk_akismet.mark_as_ham": "Mark as ham"
+    "verzameldwerk_akismet.mark_as_ham": "Mark as ham",
+    "verzameldwerk_akismet.no_form_field_selected": "No form field selected",
+    "verzameldwerk_akismet.select_form_field": "Select form field",
+    "verzameldwerk_akismet.field_mapping": "Field Mapping",
+    "verzameldwerk_akismet.author_name_field": "Author name field",
+    "verzameldwerk_akismet.author_email_field": "Author email field",
+    "verzameldwerk_akismet.content_field": "Content field"
 }

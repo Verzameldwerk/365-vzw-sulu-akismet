@@ -10,6 +10,11 @@ verzameldwerk_akismet.post_akismet-configuration_trigger:
         _controller: verzameldwerk_akismet.akismet_configuration_controller::postTriggerAction
         _format: json
 
+verzameldwerk_akismet.akismet_form_field:
+    type: rest
+    name_prefix: verzameldwerk_akismet.
+    resource: verzameldwerk_akismet.akismet_form_field_controller
+
 verzameldwerk_akismet.akismet_request:
     type: rest
     name_prefix: verzameldwerk_akismet.

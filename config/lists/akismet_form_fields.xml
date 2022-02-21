@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>akismet_form_fields</key>
+
+    <joins name="form">
+        <join>
+            <entity-name>Sulu\Bundle\FormBundle\Entity\Form</entity-name>
+            <field-name>Sulu\Bundle\FormBundle\Entity\FormField.form</field-name>
+        </join>
+    </joins>
+
+    <joins name="translation">
+        <join>
+            <entity-name>Sulu\Bundle\FormBundle\Entity\FormFieldTranslation</entity-name>
+            <field-name>Sulu\Bundle\FormBundle\Entity\FormField.translations</field-name>
+            <condition>Sulu\Bundle\FormBundle\Entity\FormFieldTranslation.locale = :locale</condition>
+        </join>
+    </joins>
+
+    <joins name="defaultTranslation">
+        <join>
+            <entity-name>Sulu\Bundle\FormBundle\Entity\FormFieldTranslationDefault</entity-name>
+            <field-name>Sulu\Bundle\FormBundle\Entity\FormField.translations</field-name>
+            <condition>Sulu\Bundle\FormBundle\Entity\FormFieldTranslationDefault.locale = Sulu\Bundle\FormBundle\Entity\FormField.defaultLocale</condition>
+        </join>
+    </joins>
+
+    <properties>
+        <property name="id" translation="sulu_admin.id" visibility="no">
+            <field-name>id</field-name>
+            <entity-name>Sulu\Bundle\FormBundle\Entity\FormField</entity-name>
+        </property>
+
+        <property name="formId" visibility="never">
+            <field-name>id</field-name>
+            <entity-name>Sulu\Bundle\FormBundle\Entity\Form</entity-name>
+            <joins ref="form"/>
+        </property>
+
+        <case-property name="title" translation="sulu_admin.title" visibility="always">
+            <field>
+                <field-name>title</field-name>
+                <entity-name>Sulu\Bundle\FormBundle\Entity\FormFieldTranslation</entity-name>
+                <joins ref="translation"/>
+            </field>
+            <field>
+                <field-name>title</field-name>
+                <entity-name>Sulu\Bundle\FormBundle\Entity\FormFieldTranslationDefault</entity-name>
+                <joins ref="defaultTranslation"/>
+            </field>
+        </case-property>
+    </properties>
+</list>

@@ -11,5 +11,5 @@ interface AkismetParamsResolverInterface
     /**
      * @return array<string, mixed>
      */
-    public function resolve(FormInterface $form): array;
+    public function resolve(FormInterface $form, int $suluFormId): array;
 }

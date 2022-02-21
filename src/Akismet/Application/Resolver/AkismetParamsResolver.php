@@ -7,19 +7,25 @@ namespace Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Resolver;
 use Sulu\Bundle\FormBundle\Entity\Dynamic;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Repository\AkismetConfigurationRepositoryInterface;
 
 final class AkismetParamsResolver implements AkismetParamsResolverInterface
 {
+    private AkismetConfigurationRepositoryInterface $akismetConfigurationRepository;
     private RequestStack $requestStack;
     private ?string $honeypotField;
 
-    public function __construct(RequestStack $requestStack, ?string $honeypotField)
-    {
+    public function __construct(
+        AkismetConfigurationRepositoryInterface $akismetConfigurationRepository,
+        RequestStack $requestStack,
+        ?string $honeypotField
+    ) {
+        $this->akismetConfigurationRepository = $akismetConfigurationRepository;
         $this->requestStack = $requestStack;
         $this->honeypotField = $honeypotField;
     }
 
-    public function resolve(FormInterface $form): array
+    public function resolve(FormInterface $form, int $suluFormId): array
     {
         return array_merge(
             [
@@ -27,32 +33,49 @@ final class AkismetParamsResolver implements AkismetParamsResolverInterface
                 'comment_date_gmt' => date('c'),
             ],
             $this->resolveRequestParams(),
-            $this->resolveFormParams($form)
+            $this->resolveFormParams($form, $suluFormId)
         );
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function resolveFormParams(FormInterface $form): array
+    private function resolveFormParams(FormInterface $form, int $suluFormId): array
     {
         if (!$form->isSubmitted()) {
-            throw new \RuntimeException('The AkismetParamsResolver can only work with submitted forms');
+            throw new \RuntimeException('The AkismetParamsResolver only works with submitted forms');
         }
 
         $data = $form->getData();
 
         if (!$data instanceof Dynamic) {
-            throw new \RuntimeException('The AkismetParamsResolver can only work with sulu forms');
+            throw new \RuntimeException('The AkismetParamsResolver only works with sulu forms');
+        }
+
+        $akismetConfiguration = $this->akismetConfigurationRepository->getByFormId($suluFormId);
+
+        $authorNameField = $akismetConfiguration->getAuthorNameField() ?: '';
+        if ($authorNameField) {
+            $authorNameField = $authorNameField->getKey();
+        }
+
+        $authorEmailField = $akismetConfiguration->getAuthorEmailField() ?: '';
+        if ($authorEmailField) {
+            $authorEmailField = $authorEmailField->getKey();
+        }
+
+        $contentField = $akismetConfiguration->getContentField() ?: '';
+        if ($contentField) {
+            $contentField = $contentField->getKey();
         }
 
         $params = [
-            'comment_author' => implode(' ', array_filter([
+            'comment_author' => $data->getField($authorNameField) ?: implode(' ', array_filter([
                 $data->getFirstName(),
                 $data->getLastName(),
             ])),
-            'comment_author_email' => $data->getEmail(),
-            'comment_content' => $data->getTextarea() ?: $data->getText(),
+            'comment_author_email' => $data->getField($authorEmailField) ?: $data->getEmail(),
+            'comment_content' => $data->getField($contentField) ?: $data->getTextarea() ?: $data->getText(),
             'blog_lang' => $data->getLocale(),
         ];
 
