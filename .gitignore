@@ -1,5 +1,7 @@
+/composer.lock
 /vendor/
-.php-cs-fixer.cache
-.deptrac.cache
-composer.lock
 /tests/Application/var
+/tests/reports
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+/.deptrac.cache

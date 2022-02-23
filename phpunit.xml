@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="tests/Application/config/bootstrap.php"
+         executionOrder="depends,defects"
+         forceCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         convertDeprecationsToExceptions="true"
+         verbose="true">
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+        <!-- See: https://symfony.com/doc/current/components/phpunit_bridge.html#modified-phpunit-script -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+        <!-- Set "SYMFONY_PHPUNIT_VERSION" to use fixed phpunit version: https://symfony.com/doc/current/components/phpunit_bridge.html#modified-phpunit-script -->
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
+        <!-- Set "SYMFONY_PHPUNIT_REMOVE" to "symfony/yaml" to install "prophecy": https://symfony.com/doc/current/components/phpunit_bridge.html#modified-phpunit-script -->
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="symfony/yaml"/>
+        <env name="KERNEL_CLASS" value="Verzameldwerk\Bundle\AkismetBundle\Tests\Application\Kernel"/>
+    </php>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+
+    <testsuites>
+        <testsuite name="default">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

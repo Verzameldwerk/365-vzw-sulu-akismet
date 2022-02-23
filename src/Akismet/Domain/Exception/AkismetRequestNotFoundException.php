@@ -8,7 +8,7 @@ use Symfony\Component\Messenger\Exception\UnrecoverableExceptionInterface;
 
 final class AkismetRequestNotFoundException extends ModelNotFoundException implements UnrecoverableExceptionInterface
 {
-    protected static function getModelName(): string
+    public static function getModelName(): string
     {
         return 'AkismetRequest';
     }

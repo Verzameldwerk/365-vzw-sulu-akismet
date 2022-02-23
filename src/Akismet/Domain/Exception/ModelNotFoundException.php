@@ -35,6 +35,10 @@ abstract class ModelNotFoundException extends \Exception
         $messageParts = [];
 
         foreach ($criteria as $key => $value) {
+            if (\is_array($value)) {
+                $value = json_encode($value);
+            }
+
             if (!is_scalar($value)) {
                 continue;
             }
@@ -53,5 +57,5 @@ abstract class ModelNotFoundException extends \Exception
         return $this->criteria;
     }
 
-    abstract protected static function getModelName(): string;
+    abstract public static function getModelName(): string;
 }
