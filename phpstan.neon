@@ -9,6 +9,7 @@ parameters:
     excludePaths:
         - %currentWorkingDirectory%/tests/Application/Kernel.php
         - %currentWorkingDirectory%/tests/Application/var/*
+        - %currentWorkingDirectory%/tests/reports/*
     symfony:
         container_xml_path: %currentWorkingDirectory%/tests/Application/var/cache/admin/test/Verzameldwerk_Bundle_AkismetBundle_Tests_Application_KernelTestDebugContainer.xml
         console_application_loader: tests/phpstan/console-application.php
