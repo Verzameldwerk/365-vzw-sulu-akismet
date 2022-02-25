@@ -42,13 +42,9 @@ final class CreateAkismetConfigurationCommandHandler implements MessageHandlerIn
 
         $this->dataMapper->mapData($akismetConfiguration, $data);
 
-        if (!$akismetConfiguration->getApiKey() || !$akismetConfiguration->getSiteUrl()) {
-            $akismetConfiguration->setActive(false);
-
-            return $akismetConfiguration;
+        if ($akismetConfiguration->getApiKey() && $akismetConfiguration->getSiteUrl()) {
+            $this->api->verifyKey($akismetConfiguration);
         }
-
-        $this->api->verifyKey($akismetConfiguration);
 
         return $akismetConfiguration;
     }
