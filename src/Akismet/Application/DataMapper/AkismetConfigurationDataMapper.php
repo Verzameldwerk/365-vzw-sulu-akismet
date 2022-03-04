@@ -20,11 +20,25 @@ final class AkismetConfigurationDataMapper implements AkismetConfigurationDataMa
 
     public function mapData(AkismetConfigurationInterface $akismetConfiguration, array $data): void
     {
+        $akismetConfiguration->setActive($this->getActive($data));
         $akismetConfiguration->setSiteUrl($this->getSiteUrl($data));
         $akismetConfiguration->setApiKey($this->getApiKey($data));
         $akismetConfiguration->setAuthorNameField($this->getFormField('authorNameField', $data));
         $akismetConfiguration->setAuthorEmailField($this->getFormField('authorEmailField', $data));
         $akismetConfiguration->setContentField($this->getFormField('contentField', $data));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function getActive(array $data): bool
+    {
+        Assert::keyExists($data, 'active');
+
+        $active = $data['active'];
+        Assert::nullOrBoolean($active);
+
+        return $active ?? false;
     }
 
     /**

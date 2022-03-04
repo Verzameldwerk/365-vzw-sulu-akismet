@@ -50,7 +50,7 @@ final class AkismetApi implements AkismetApiInterface
             // @codeCoverageIgnoreEnd
         }
 
-        throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
+        throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help') ?: 'API key is not valid');
     }
 
     /**

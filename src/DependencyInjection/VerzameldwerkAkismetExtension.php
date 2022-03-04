@@ -87,7 +87,7 @@ final class VerzameldwerkAkismetExtension extends Extension implements PrependEx
                                         'display_properties' => ['title'],
                                         'empty_text' => 'verzameldwerk_akismet.no_form_field_selected',
                                         'icon' => 'su-tree-list',
-                                        'overlay_title' => 'sulu_form.select_form_field',
+                                        'overlay_title' => 'verzameldwerk_akismet.select_form_field',
                                     ],
                                 ],
                             ],
