@@ -45,7 +45,9 @@ final class AkismetApi implements AkismetApiInterface
         $content = $response->getContent();
 
         if ('valid' === $content) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
@@ -133,7 +135,9 @@ final class AkismetApi implements AkismetApiInterface
         $content = $response->getContent();
 
         if ('Thanks for making the web a better place.' === $content) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
