@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Verzameldwerk\Bundle\AkismetBundle\Akismet\Infrastructure\Sulu\Admin;
 
 use Sulu\Bundle\AdminBundle\Admin\Admin;
-use Sulu\Bundle\AdminBundle\Admin\View\TogglerToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\View\ToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewBuilderFactoryInterface;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewCollection;
@@ -29,7 +28,8 @@ final class AkismetConfigurationAdmin extends Admin
 
     public function configureViews(ViewCollection $viewCollection): void
     {
-        if (!$this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
+        if (!$this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::VIEW)
+            || !$this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
             return;
         }
 
@@ -39,19 +39,11 @@ final class AkismetConfigurationAdmin extends Admin
 
         if ($this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
             $toolbarActions[] = new ToolbarAction('sulu_admin.delete', [
-                'visible_condition' => '!!id',
                 'router_attributes_to_back_view' => [
                     'id' => 'id',
                 ],
             ]);
         }
-
-        $toolbarActions[] = new TogglerToolbarAction(
-            'verzameldwerk_akismet.configuration_active',
-            'active',
-            'activate',
-            'deactivate',
-        );
 
         if ($viewCollection->has(FormAdmin::EDIT_FORM_VIEW)) {
             $viewCollection->add(

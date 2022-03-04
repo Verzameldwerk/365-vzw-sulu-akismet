@@ -8,6 +8,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Api\AkismetApiInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\UpdateAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\DataMapper\AkismetConfigurationDataMapperInterface;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Exception\AkismetApiException;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Repository\AkismetConfigurationRepositoryInterface;
 
@@ -33,15 +34,30 @@ final class UpdateAkismetConfigurationCommandHandler implements MessageHandlerIn
         $data = $command->getData();
 
         $akismetConfiguration = $this->repository->getById($id);
+        $previousActiveState = $akismetConfiguration->isActive();
+
         $this->dataMapper->mapData($akismetConfiguration, $data);
+        $newActiveState = $akismetConfiguration->isActive();
 
-        if (!$akismetConfiguration->getApiKey() || !$akismetConfiguration->getSiteUrl()) {
+        if (!$akismetConfiguration->getApiKey()) {
+            if (!$previousActiveState && $newActiveState) {
+                throw new AkismetApiException('Cannot activate akismet configuration, if api key is empty');
+            }
+
             $akismetConfiguration->setActive(false);
-
-            return $akismetConfiguration;
         }
 
-        $this->api->verifyKey($akismetConfiguration);
+        if (!$akismetConfiguration->getSiteUrl()) {
+            if (!$previousActiveState && $newActiveState) {
+                throw new AkismetApiException('Cannot activate akismet configuration, if site url is empty');
+            }
+
+            $akismetConfiguration->setActive(false);
+        }
+
+        if ($akismetConfiguration->getApiKey() && $akismetConfiguration->getSiteUrl()) {
+            $this->api->verifyKey($akismetConfiguration);
+        }
 
         return $akismetConfiguration;
     }

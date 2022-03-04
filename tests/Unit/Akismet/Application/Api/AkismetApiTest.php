@@ -50,6 +50,22 @@ class AkismetApiTest extends TestCase
     public function testVerifyKeyInvalid(): void
     {
         $this->httpClient->setResponseFactory(
+            new MockResponse('invalid')
+        );
+
+        $akismetConfiguration = $this->createAkismetConfiguration();
+        $akismetConfiguration->setApiKey('invalid-api-key');
+        $akismetConfiguration->setSiteUrl('invalid-site-url');
+
+        static::expectException(AkismetApiException::class);
+        static::expectExceptionMessage('API key is not valid');
+
+        $this->api->verifyKey($akismetConfiguration);
+    }
+
+    public function testVerifyKeyInvalidWithDebugHeader(): void
+    {
+        $this->httpClient->setResponseFactory(
             new MockResponse('invalid', ['response_headers' => ['x-akismet-debug-help' => 'Some details about the error']])
         );
 

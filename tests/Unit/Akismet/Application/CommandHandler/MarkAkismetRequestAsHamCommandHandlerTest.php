@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Verzameldwerk\Bundle\AkismetBundle\Tests\Unit\Akismet\Application\Command;
+namespace Verzameldwerk\Bundle\AkismetBundle\Tests\Unit\Akismet\Application\CommandHandler;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;

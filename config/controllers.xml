@@ -8,7 +8,6 @@
         </defaults>
 
         <service id="verzameldwerk_akismet.akismet_configuration_controller" class="Verzameldwerk\Bundle\AkismetBundle\Akismet\UserInterface\Controller\Admin\AkismetConfigurationController" public="true">
-            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
             <argument type="service" id="verzameldwerk_akismet.command_bus"/>
             <argument type="service" id="fos_rest.view_handler"/>
             <argument type="service" id="security.token_storage" on-invalid="null"/>

@@ -15,16 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\ActivateAkismetConfigurationCommand;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\CreateAkismetConfigurationCommand;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\DeactivateAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\DeleteAkismetConfigurationCommand;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\FindOrCreateAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\UpdateAkismetConfigurationCommand;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\ActivateAkismetConfigurationCommandHandler;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\DeleteAkismetConfigurationCommandHandler;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Exception\AkismetConfigurationNotFoundException;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface;
-use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Repository\AkismetConfigurationRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 /**
@@ -34,15 +29,11 @@ final class AkismetConfigurationController extends AbstractRestController implem
 {
     use HandleTrait;
 
-    private AkismetConfigurationRepositoryInterface $repository;
-
     public function __construct(
-        AkismetConfigurationRepositoryInterface $repository,
         MessageBusInterface $messageBus,
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null
     ) {
-        $this->repository = $repository;
         $this->messageBus = $messageBus;
 
         parent::__construct($viewHandler, $tokenStorage);
@@ -53,14 +44,15 @@ final class AkismetConfigurationController extends AbstractRestController implem
         $formId = $request->query->getInt('formId');
         Assert::notEmpty($formId);
 
-        try {
-            $result = $this->repository->getByFormId($formId);
-        } catch (AkismetConfigurationNotFoundException $e) {
-            $result = new \stdClass();
-        }
+        /* @see FindOrCreateAkismetConfigurationCommandHandler::__invoke() */
+        $akismetConfiguration = $this->handle(
+            new FindOrCreateAkismetConfigurationCommand($formId)
+        );
+
+        Assert::isInstanceOf($akismetConfiguration, AkismetConfigurationInterface::class);
 
         return $this->handleView(
-            $this->view($result)
+            $this->view($akismetConfiguration)
         );
     }
 
@@ -72,23 +64,6 @@ final class AkismetConfigurationController extends AbstractRestController implem
         throw new \LogicException('Not implemented');
     }
 
-    public function postAction(Request $request): Response
-    {
-        $formId = $request->query->getInt('formId');
-        Assert::notEmpty($formId);
-
-        /** @see CreateAkismetConfigurationCommandHandler::__invoke() */
-        $akismetConfiguration = $this->handle(
-            new CreateAkismetConfigurationCommand($formId, $request->request->all())
-        );
-
-        Assert::isInstanceOf($akismetConfiguration, AkismetConfigurationInterface::class);
-
-        return $this->handleView(
-            $this->view($akismetConfiguration)
-        );
-    }
-
     public function putAction(Request $request, int $id): Response
     {
         /** @see UpdateAkismetConfigurationCommandHandler::__invoke() */
@@ -96,35 +71,6 @@ final class AkismetConfigurationController extends AbstractRestController implem
             new UpdateAkismetConfigurationCommand($id, $request->request->all())
         );
 
-        Assert::isInstanceOf($akismetConfiguration, AkismetConfigurationInterface::class);
-
-        return $this->handleView(
-            $this->view($akismetConfiguration)
-        );
-    }
-
-    public function postTriggerAction(Request $request, int $id): Response
-    {
-        $action = $request->query->get('action');
-        Assert::stringNotEmpty($action);
-        Assert::oneOf($action, ['activate', 'deactivate']);
-
-        switch ($action) {
-            case 'activate':
-                $command = new ActivateAkismetConfigurationCommand($id);
-                break;
-            case 'deactivate':
-                $command = new DeactivateAkismetConfigurationCommand($id);
-                break;
-            default:
-                throw new \InvalidArgumentException();
-        }
-
-        /**
-         * @see ActivateAkismetConfigurationCommandHandler::__invoke()
-         * @see DeactivateAkismetConfigurationCommandHandler::__invoke()
-         */
-        $akismetConfiguration = $this->handle($command);
         Assert::isInstanceOf($akismetConfiguration, AkismetConfigurationInterface::class);
 
         return $this->handleView(
