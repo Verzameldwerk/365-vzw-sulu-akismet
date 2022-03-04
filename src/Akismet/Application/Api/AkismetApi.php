@@ -41,14 +41,16 @@ final class AkismetApi implements AkismetApiInterface
             'key' => $apiKey,
             'blog' => $siteUrl,
         ]);
+
         $content = $response->getContent();
+
         if ('valid' === $content) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
-        /** @var array{"X-akismet-debug-help"?: string} $headers */
-        $headers = $response->getHeaders();
-        throw new AkismetApiException((string) ($headers['X-akismet-debug-help'] ?? ''));
+        throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
     }
 
     /**
@@ -71,10 +73,7 @@ final class AkismetApi implements AkismetApiInterface
         $content = $response->getContent();
 
         if ('true' === $content) {
-            /** @var array{"X-akismet-pro-tip"?: string} $headers */
-            $headers = $response->getHeaders();
-
-            if (($headers['X-akismet-pro-tip'] ?? null) === 'discard') {
+            if ('discard' === $this->getHeaderValue($response->getHeaders(), 'x-akismet-pro-tip')) {
                 return self::RESULT_DISCARD;
             }
 
@@ -85,9 +84,7 @@ final class AkismetApi implements AkismetApiInterface
             return self::RESULT_HAM;
         }
 
-        /** @var array{"X-akismet-debug-help"?: string} $headers */
-        $headers = $response->getHeaders();
-        throw new AkismetApiException((string) ($headers['X-akismet-debug-help'] ?? ''));
+        throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
     }
 
     /**
@@ -136,13 +133,14 @@ final class AkismetApi implements AkismetApiInterface
         );
 
         $content = $response->getContent();
+
         if ('Thanks for making the web a better place.' === $content) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
-        /** @var array{"X-akismet-debug-help"?: string} $headers */
-        $headers = $response->getHeaders();
-        throw new AkismetApiException((string) ($headers['X-akismet-debug-help'] ?? ''));
+        throw new AkismetApiException($this->getHeaderValue($response->getHeaders(), 'x-akismet-debug-help'));
     }
 
     /**
@@ -188,5 +186,19 @@ final class AkismetApi implements AkismetApiInterface
         if (!$configuration->getSiteUrl()) {
             throw new AkismetApiException('Cannot call akismet api, because "siteUrl" is missing');
         }
+    }
+
+    /**
+     * @param array<string, mixed> $headers
+     */
+    private function getHeaderValue(array $headers, string $key): string
+    {
+        $value = $headers[strtolower($key)] ?? null;
+
+        if (\is_array($value)) {
+            $value = $value[0] ?? null;
+        }
+
+        return (string) $value;
     }
 }
