@@ -9,7 +9,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:luca-rath/akismet-bundle.git"
+            "url": "git@github.com:Verzameldwerk/365-vzw-SuluAkismetBundle.git"
         }
     ]
 }
