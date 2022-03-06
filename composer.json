@@ -45,6 +45,10 @@
         "symfony/phpunit-bridge": "^5.4 || ^6.0",
         "thecodingmachine/phpstan-strict-rules": "^1.0"
     },
+    "conflict": {
+        "symfony/swiftmailer-bundle": "<3.4.0",
+        "jms/serializer": "<3.2.0"
+    },
     "scripts": {
         "bootstrap-test-environment": [
             "@php tests/Application/bin/adminconsole doctrine:database:drop --if-exists --force --env test",

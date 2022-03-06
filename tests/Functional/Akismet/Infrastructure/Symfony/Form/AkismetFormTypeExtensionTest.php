@@ -232,6 +232,10 @@ class AkismetFormTypeExtensionTest extends SuluTestCase
         $translation = new FormTranslation();
         $translation->setTitle('Test form');
         $translation->setLocale($form->getDefaultLocale());
+        $translation->setFromEmail('from@example.com');
+        $translation->setToEmail('to@example.com');
+        $translation->setDeactivateCustomerMails(true);
+        $translation->setDeactivateNotifyMails(true);
         $translation->setForm($form);
         $form->addTranslation($translation);
 
