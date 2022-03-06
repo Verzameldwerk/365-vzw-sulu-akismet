@@ -30,7 +30,9 @@ final class AkismetConfigurationAdmin extends Admin
     {
         if (!$this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::VIEW)
             || !$this->securityChecker->hasPermission(AkismetConfigurationInterface::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         $toolbarActions = [

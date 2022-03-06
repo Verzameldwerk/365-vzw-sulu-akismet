@@ -6,6 +6,7 @@
         <service id="verzameldwerk_akismet.akismet_form_type_extension"
                  class="Verzameldwerk\Bundle\AkismetBundle\Akismet\Infrastructure\Symfony\Form\AkismetFormTypeExtension">
             <argument type="service" id="verzameldwerk_akismet.command_bus"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
             <argument type="service" id="verzameldwerk_akismet.akismet_params_resolver"/>
             <argument type="service" id="monolog.logger" on-invalid="null"/>
             <argument>%kernel.debug%</argument>

@@ -61,7 +61,7 @@ final class AkismetConfigurationController extends AbstractRestController implem
      */
     public function getAction(int $id): Response
     {
-        throw new \LogicException('Not implemented');
+        return new Response('', Response::HTTP_NOT_FOUND);
     }
 
     public function putAction(Request $request, int $id): Response

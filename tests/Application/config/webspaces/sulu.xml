@@ -23,7 +23,7 @@
         <contexts>
             <context key="main">
                 <meta>
-                    <title>Main navigation</title>
+                    <title lang="en">Main navigation</title>
                 </meta>
             </context>
         </contexts>

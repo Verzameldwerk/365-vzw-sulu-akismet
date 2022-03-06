@@ -36,5 +36,9 @@ class Kernel extends SuluTestKernel
     {
         parent::registerContainerConfiguration($loader);
         $loader->load(__DIR__.'/config/config_'.$this->getContext().'.yml');
+
+        if ('test' === $this->getEnvironment()) {
+            $loader->load(__DIR__.'/config/services_test.yml');
+        }
     }
 }

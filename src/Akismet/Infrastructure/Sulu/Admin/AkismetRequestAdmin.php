@@ -29,7 +29,9 @@ final class AkismetRequestAdmin extends Admin
     public function configureViews(ViewCollection $viewCollection): void
     {
         if (!$this->securityChecker->hasPermission(AkismetRequestInterface::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
+            // @codeCoverageIgnoreStart
             return;
+            // @codeCoverageIgnoreEnd
         }
 
         $toolbarActions = [];
