@@ -39,11 +39,11 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationRepositoryInterface> */
-        $repository = $this->repository = self::prophesize(AkismetConfigurationRepositoryInterface::class);
+        $repository = $this->repository = $this->prophesize(AkismetConfigurationRepositoryInterface::class);
         /** @var ObjectProphecy<AkismetConfigurationDataMapperInterface> */
-        $dataMapper = $this->dataMapper = self::prophesize(AkismetConfigurationDataMapperInterface::class);
+        $dataMapper = $this->dataMapper = $this->prophesize(AkismetConfigurationDataMapperInterface::class);
         /** @var ObjectProphecy<AkismetApiInterface> */
-        $api = $this->api = self::prophesize(AkismetApiInterface::class);
+        $api = $this->api = $this->prophesize(AkismetApiInterface::class);
 
         $this->commandHandler = new UpdateAkismetConfigurationCommandHandler(
             $repository->reveal(),
@@ -55,7 +55,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithApiKeyAndSiteUrlActivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, true)->shouldBeCalledTimes(2);
 
@@ -76,7 +76,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithApiKeyAndSiteUrlKeepActive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, true)->shouldBeCalledTimes(2);
 
@@ -97,7 +97,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithApiKeyAndSiteUrlDeactivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, false)->shouldBeCalledTimes(2);
 
@@ -118,7 +118,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithApiKeyAndSiteUrlKeepInactive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, false)->shouldBeCalledTimes(2);
 
@@ -142,7 +142,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutApiKeyActivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, true)->shouldBeCalledTimes(2);
 
@@ -163,7 +163,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutApiKeyKeepActive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, true)->shouldBeCalledTimes(2);
 
@@ -184,7 +184,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutApiKeyDeactivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, false)->shouldBeCalledTimes(2);
 
@@ -205,7 +205,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutApiKeyKeepInactive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, false)->shouldBeCalledTimes(2);
 
@@ -229,7 +229,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutSiteUrlActivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, true)->shouldBeCalledTimes(2);
 
@@ -250,7 +250,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutSiteUrlKeepActive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, true)->shouldBeCalledTimes(2);
 
@@ -271,7 +271,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutSiteUrlDeactivate(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(true, false)->shouldBeCalledTimes(2);
 
@@ -292,7 +292,7 @@ class UpdateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeWithoutSiteUrlKeepInactive(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
         $akismetConfiguration->isActive()->willReturn(false, false)->shouldBeCalledTimes(2);
 

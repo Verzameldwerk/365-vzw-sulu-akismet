@@ -31,7 +31,7 @@ final class AkismetConfigurationDataMapper implements AkismetConfigurationDataMa
     /**
      * @param array<string, mixed> $data
      */
-    public function getActive(array $data): bool
+    private function getActive(array $data): bool
     {
         Assert::keyExists($data, 'active');
 
@@ -44,7 +44,7 @@ final class AkismetConfigurationDataMapper implements AkismetConfigurationDataMa
     /**
      * @param array<string, mixed> $data
      */
-    public function getSiteUrl(array $data): ?string
+    private function getSiteUrl(array $data): ?string
     {
         Assert::keyExists($data, 'siteUrl');
 
@@ -57,7 +57,7 @@ final class AkismetConfigurationDataMapper implements AkismetConfigurationDataMa
     /**
      * @param array<string, mixed> $data
      */
-    public function getApiKey(array $data): ?string
+    private function getApiKey(array $data): ?string
     {
         Assert::keyExists($data, 'apiKey');
 
@@ -70,7 +70,7 @@ final class AkismetConfigurationDataMapper implements AkismetConfigurationDataMa
     /**
      * @param array<string, mixed> $data
      */
-    public function getFormField(string $fieldName, array $data): ?FormField
+    private function getFormField(string $fieldName, array $data): ?FormField
     {
         Assert::keyExists($data, $fieldName);
 

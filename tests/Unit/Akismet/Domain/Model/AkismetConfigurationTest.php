@@ -106,7 +106,7 @@ class AkismetConfigurationTest extends TestCase
     private function createFormField(array $data = []): FormField
     {
         /** @var ObjectProphecy<FormField> $formField */
-        $formField = self::prophesize(FormField::class);
+        $formField = $this->prophesize(FormField::class);
 
         if ($id = $data['id'] ?? null) {
             $formField->getId()->willReturn($id);
@@ -123,7 +123,7 @@ class AkismetConfigurationTest extends TestCase
     private function createForm(array $data = []): Form
     {
         /** @var ObjectProphecy<Form> $form */
-        $form = self::prophesize(Form::class);
+        $form = $this->prophesize(Form::class);
 
         if ($id = $data['id'] ?? null) {
             $form->getId()->willReturn($id);

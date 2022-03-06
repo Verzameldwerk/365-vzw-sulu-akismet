@@ -58,7 +58,7 @@ class AkismetRequestTest extends TestCase
     private function createAkismetConfiguration(): AkismetConfigurationInterface
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
 
         return $akismetConfiguration->reveal();
     }

@@ -38,11 +38,11 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationRepositoryInterface> */
-        $configurationRepository = $this->configurationRepository = self::prophesize(AkismetConfigurationRepositoryInterface::class);
+        $configurationRepository = $this->configurationRepository = $this->prophesize(AkismetConfigurationRepositoryInterface::class);
         /** @var ObjectProphecy<AkismetRequestRepositoryInterface> */
-        $requestRepository = $this->requestRepository = self::prophesize(AkismetRequestRepositoryInterface::class);
+        $requestRepository = $this->requestRepository = $this->prophesize(AkismetRequestRepositoryInterface::class);
         /** @var ObjectProphecy<AkismetApiInterface> */
-        $api = $this->api = self::prophesize(AkismetApiInterface::class);
+        $api = $this->api = $this->prophesize(AkismetApiInterface::class);
 
         $this->commandHandler = new CreateAkismetRequestCommandHandler(
             $configurationRepository->reveal(),
@@ -54,14 +54,14 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
     public function testInvokeResultHam(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->configurationRepository->getByFormId(1)->willReturn($akismetConfiguration->reveal());
 
         $akismetConfiguration->getSiteUrl()->willReturn('site-url');
         $this->api->checkComment($akismetConfiguration, ['foo' => 'bar', 'blog' => 'site-url'])->shouldBeCalled()->willReturn('ham');
 
         /** @var ObjectProphecy<AkismetRequestInterface> $akismetRequest */
-        $akismetRequest = self::prophesize(AkismetRequestInterface::class);
+        $akismetRequest = $this->prophesize(AkismetRequestInterface::class);
         $this->requestRepository->create($akismetConfiguration->reveal(), ['foo' => 'bar', 'blog' => 'site-url'], false)
             ->shouldBeCalled()
             ->willReturn($akismetRequest->reveal());
@@ -74,14 +74,14 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
     public function testInvokeResultSpam(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->configurationRepository->getByFormId(1)->willReturn($akismetConfiguration->reveal());
 
         $akismetConfiguration->getSiteUrl()->willReturn('site-url');
         $this->api->checkComment($akismetConfiguration, ['foo' => 'bar', 'blog' => 'site-url'])->shouldBeCalled()->willReturn('spam');
 
         /** @var ObjectProphecy<AkismetRequestInterface> $akismetRequest */
-        $akismetRequest = self::prophesize(AkismetRequestInterface::class);
+        $akismetRequest = $this->prophesize(AkismetRequestInterface::class);
         $this->requestRepository->create($akismetConfiguration->reveal(), ['foo' => 'bar', 'blog' => 'site-url'], true)
             ->shouldBeCalled()
             ->willReturn($akismetRequest->reveal());
@@ -94,14 +94,14 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
     public function testInvokeResultDiscard(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->configurationRepository->getByFormId(1)->willReturn($akismetConfiguration->reveal());
 
         $akismetConfiguration->getSiteUrl()->willReturn('site-url');
         $this->api->checkComment($akismetConfiguration, ['foo' => 'bar', 'blog' => 'site-url'])->shouldBeCalled()->willReturn('discard');
 
         /** @var ObjectProphecy<AkismetRequestInterface> $akismetRequest */
-        $akismetRequest = self::prophesize(AkismetRequestInterface::class);
+        $akismetRequest = $this->prophesize(AkismetRequestInterface::class);
         $this->requestRepository->create($akismetConfiguration->reveal(), ['foo' => 'bar', 'blog' => 'site-url'], true)
             ->shouldBeCalled()
             ->willReturn($akismetRequest->reveal());
@@ -116,7 +116,7 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
         $this->expectException(\LogicException::class);
 
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->configurationRepository->getByFormId(1)->willReturn($akismetConfiguration->reveal());
 
         $akismetConfiguration->getSiteUrl()->willReturn('site-url');

@@ -87,7 +87,7 @@
         "phpunit": "@php vendor/bin/simple-phpunit",
         "test": "@phpunit",
         "test-with-coverage": "@phpunit --coverage-php tests/reports/coverage.php --coverage-html tests/reports/html --log-junit tests/reports/unit/junit.xml --coverage-clover tests/reports/clover.xml",
-        "check-coverage": "@php vendor/bin/code-coverage-checker \"tests/reports/coverage.php\" \"line\" \"100.00\" \"src/Akismet/Domain\" \"src/Akismet/Application/Command\" \"src/Akismet/Application/CommandHandler\" \"src/Akismet/Application/Api\""
+        "check-coverage": "@php vendor/bin/code-coverage-checker \"tests/reports/coverage.php\" \"line\" \"100.00\" \"src/Akismet/Domain\" \"src/Akismet/Application\""
     },
     "autoload": {
         "psr-4": {
