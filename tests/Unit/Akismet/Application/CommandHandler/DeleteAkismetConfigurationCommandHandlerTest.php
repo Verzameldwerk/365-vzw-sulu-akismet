@@ -29,7 +29,7 @@ class DeleteAkismetConfigurationCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationRepositoryInterface> */
-        $repository = $this->repository = self::prophesize(AkismetConfigurationRepositoryInterface::class);
+        $repository = $this->repository = $this->prophesize(AkismetConfigurationRepositoryInterface::class);
 
         $this->commandHandler = new DeleteAkismetConfigurationCommandHandler(
             $repository->reveal(),
@@ -39,7 +39,7 @@ class DeleteAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvoke(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getById(1)->willReturn($akismetConfiguration->reveal());
 
         $this->repository->remove($akismetConfiguration->reveal())->shouldBeCalled();

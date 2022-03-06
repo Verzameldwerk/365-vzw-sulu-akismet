@@ -34,9 +34,9 @@ class MarkAkismetRequestAsHamCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         /** @var ObjectProphecy<AkismetRequestRepositoryInterface> */
-        $repository = $this->repository = self::prophesize(AkismetRequestRepositoryInterface::class);
+        $repository = $this->repository = $this->prophesize(AkismetRequestRepositoryInterface::class);
         /** @var ObjectProphecy<AkismetApiInterface> */
-        $api = $this->api = self::prophesize(AkismetApiInterface::class);
+        $api = $this->api = $this->prophesize(AkismetApiInterface::class);
 
         $this->commandHandler = new MarkAkismetRequestAsHamCommandHandler(
             $repository->reveal(),
@@ -47,13 +47,13 @@ class MarkAkismetRequestAsHamCommandHandlerTest extends TestCase
     public function testInvoke(): void
     {
         /** @var ObjectProphecy<AkismetRequestInterface> $akismetRequest */
-        $akismetRequest = self::prophesize(AkismetRequestInterface::class);
+        $akismetRequest = $this->prophesize(AkismetRequestInterface::class);
         $this->repository->getById(1)->willReturn($akismetRequest->reveal());
 
         $akismetRequest->setSpam(false)->shouldBeCalled();
 
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $akismetRequest->getAkismetConfiguration()->willReturn($akismetConfiguration->reveal());
         $akismetRequest->getRequestParams()->willReturn(['foo' => 'bar']);
 

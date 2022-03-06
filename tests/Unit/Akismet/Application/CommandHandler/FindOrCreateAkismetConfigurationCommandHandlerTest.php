@@ -30,7 +30,7 @@ class FindOrCreateAkismetConfigurationCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationRepositoryInterface> */
-        $repository = $this->repository = self::prophesize(AkismetConfigurationRepositoryInterface::class);
+        $repository = $this->repository = $this->prophesize(AkismetConfigurationRepositoryInterface::class);
 
         $this->commandHandler = new FindOrCreateAkismetConfigurationCommandHandler(
             $repository->reveal()
@@ -40,7 +40,7 @@ class FindOrCreateAkismetConfigurationCommandHandlerTest extends TestCase
     public function testInvokeHavingExistingAkismetConfiguration(): void
     {
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->getByFormId(1)->willReturn($akismetConfiguration->reveal());
 
         $command = new FindOrCreateAkismetConfigurationCommand(1);
@@ -60,7 +60,7 @@ class FindOrCreateAkismetConfigurationCommandHandlerTest extends TestCase
         $this->repository->getByFormId(1)->willThrow(new AkismetConfigurationNotFoundException(['formId' => 1]));
 
         /** @var ObjectProphecy<AkismetConfigurationInterface> $akismetConfiguration */
-        $akismetConfiguration = self::prophesize(AkismetConfigurationInterface::class);
+        $akismetConfiguration = $this->prophesize(AkismetConfigurationInterface::class);
         $this->repository->create(1)->willReturn($akismetConfiguration->reveal());
         $this->repository->add($akismetConfiguration->reveal())->shouldBeCalled();
 
