@@ -15,21 +15,26 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\CreateAkismetRequestCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\CreateAkismetRequestCommandHandler;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Resolver\AkismetParamsResolverInterface;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Exception\AkismetConfigurationNotFoundException;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Repository\AkismetConfigurationRepositoryInterface;
 
 final class AkismetFormTypeExtension extends AbstractTypeExtension
 {
     private MessageBusInterface $messageBus;
+    private AkismetConfigurationRepositoryInterface $repository;
     private AkismetParamsResolverInterface $paramsResolver;
     private ?LoggerInterface $logger;
     private bool $debug;
 
     public function __construct(
         MessageBusInterface $messageBus,
+        AkismetConfigurationRepositoryInterface $repository,
         AkismetParamsResolverInterface $paramsResolver,
         ?LoggerInterface $logger,
         bool $debug
     ) {
         $this->messageBus = $messageBus;
+        $this->repository = $repository;
         $this->paramsResolver = $paramsResolver;
         $this->logger = $logger;
         $this->debug = $debug;
@@ -42,11 +47,25 @@ final class AkismetFormTypeExtension extends AbstractTypeExtension
             $data = $form->getData();
 
             if (!$form->isSubmitted() || !$form->isValid() || !$data instanceof Dynamic) {
+                // @codeCoverageIgnoreStart
                 return;
+                // @codeCoverageIgnoreEnd
             }
 
             $suluFormId = $data->getForm()->getId();
             if (!$suluFormId) {
+                // @codeCoverageIgnoreStart
+                return;
+                // @codeCoverageIgnoreEnd
+            }
+
+            try {
+                $akismetConfiguration = $this->repository->getByFormId($suluFormId);
+            } catch (AkismetConfigurationNotFoundException $e) {
+                return;
+            }
+
+            if (!$akismetConfiguration->isActive()) {
                 return;
             }
 
@@ -57,7 +76,8 @@ final class AkismetFormTypeExtension extends AbstractTypeExtension
                 $this->messageBus->dispatch(
                     new CreateAkismetRequestCommand($suluFormId, $params)
                 );
-            } catch (\Throwable $e) {
+            } catch (\Throwable $e) { // @codeCoverageIgnore
+                // @codeCoverageIgnoreStart
                 if ($this->debug) {
                     throw $e;
                 }
@@ -65,6 +85,7 @@ final class AkismetFormTypeExtension extends AbstractTypeExtension
                 if (null !== $this->logger) {
                     $this->logger->error($e->getMessage(), ['exception' => $e]);
                 }
+                // @codeCoverageIgnoreEnd
             }
         });
     }

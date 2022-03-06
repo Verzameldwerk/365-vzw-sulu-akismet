@@ -36,11 +36,15 @@
             <tag name="sulu.rlp"/>
         </property>
 
-        <property name="article" type="text_editor">
+        <property name="form" type="single_form_selection">
             <meta>
-                <title lang="en">Article</title>
-                <title lang="de">Artikel</title>
+                <title lang="en">Form</title>
+                <title lang="de">Formular</title>
             </meta>
+
+            <params>
+                <param name="resourceKey" value="page"/>
+            </params>
         </property>
     </properties>
 </template>

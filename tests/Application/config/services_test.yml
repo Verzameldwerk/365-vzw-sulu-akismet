@@ -1,0 +1,3 @@
+services:
+    Verzameldwerk\Bundle\AkismetBundle\Tests\Application\App\AkismetApi\TestAkismetApi:
+        decorates: verzameldwerk_akismet.akismet_api

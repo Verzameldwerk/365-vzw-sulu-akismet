@@ -103,7 +103,7 @@ final class AkismetRequestController extends AbstractRestController implements C
      */
     public function getAction(int $id): Response
     {
-        throw new \LogicException('Not implemented');
+        return new Response('', Response::HTTP_NOT_FOUND);
     }
 
     public function postTriggerAction(Request $request, int $id): Response
@@ -120,7 +120,9 @@ final class AkismetRequestController extends AbstractRestController implements C
                 $command = new MarkAkismetRequestAsHamCommand($id);
                 break;
             default:
+                // @codeCoverageIgnoreStart
                 throw new \InvalidArgumentException();
+                // @codeCoverageIgnoreEnd
         }
 
         /**

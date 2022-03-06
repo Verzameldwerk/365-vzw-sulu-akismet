@@ -3,7 +3,10 @@
 {% block content %}
     <h1>{{ content.title }}</h1>
 
-    <div>
-        {{ content.article|raw }}
-    </div>
+    {% if content.form %}
+        <div id="sulu-form">
+            {% form_theme content.form '@SuluForm/themes/dynamic.html.twig' %}
+            {{ form(content.form) }}
+        </div>
+    {% endif %}
 {% endblock %}
