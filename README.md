@@ -9,7 +9,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:Verzameldwerk/365-vzw-SuluAkismetBundle.git"
+            "url": "git@github.com:Verzameldwerk/365-vzw-sulu-akismet.git"
         }
     ]
 }
@@ -18,7 +18,7 @@
 2. Run the following command in your project's root directory:
 
 ```shell
-composer require verzameldwerk/akismet-bundle:"dev-main"
+composer require verzameldwerk/akismet-bundle:"dev-master"
 ```
 
 3. Add the following lines to your `config/bundles.php` file:
