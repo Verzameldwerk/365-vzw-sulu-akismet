@@ -21,14 +21,7 @@
 composer require verzameldwerk/akismet-bundle:"dev-master"
 ```
 
-3. Add the following lines to your `config/bundles.php` file:
-
-```php
-HandcraftedInTheAlps\Bundle\SuluResourceBundle\HandcraftedInTheAlpsSuluResourceBundle::class => ['all' => true],
-Verzameldwerk\Bundle\AkismetBundle\VerzameldwerkAkismetBundle::class => ['all' => true],
-```
-
-4. Create a new `config/routes/verzameldwerk_akismet_admin.yaml` file with the following content:
+3. Create a new `config/routes/verzameldwerk_akismet_admin.yaml` file with the following content:
 
 ```yaml
 verzameldwerk_akismet_api:
@@ -37,7 +30,7 @@ verzameldwerk_akismet_api:
     prefix: /admin/api
 ```
 
-5. Add the following dependency to your `assets/admin/package.json` file:
+4. Add the following dependency to your `assets/admin/package.json` file:
 
 ```json
 {
@@ -47,13 +40,13 @@ verzameldwerk_akismet_api:
 }
 ```
 
-6. Add the following line to your `assets/admin/app.js` file:
+5. Add the following line to your `assets/admin/app.js` file:
 
 ```javascript
 import 'verzameldwerk-akismet-bundle';
 ```
 
-7. Add the following lines to your `assets/admin/webpack.config.js` file right before returning the `config` object:
+6. Add the following lines to your `assets/admin/webpack.config.js` file right before returning the `config` object:
 
 ```javascript
 config.module.rules.unshift({
@@ -69,10 +62,10 @@ config.module.rules.unshift({
 });
 ```
 
-8. Update your javascript build using `bin/console sulu:admin:update-build`.
+7. Update your javascript build using `bin/console sulu:admin:update-build`.
 When asked to overwrite your local version of "package.json", answer with no.
 
-9. Update your database schema using `bin/console doctrine:schema:update --force`
+8. Update your database schema using `bin/console doctrine:schema:update --force`
 or generate a migration using `bin/console doctrine:migrations:diff` if you are using the `DoctrineMigrationsBundle`.
 
 ## Configuration
