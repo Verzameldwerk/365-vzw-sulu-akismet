@@ -44,7 +44,7 @@ final class AkismetFormFieldController extends AbstractRestController implements
         $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(
             self::RESOURCE_KEY,
             ['formId' => $formId],
-            ['locale' => $request->getLocale()]
+            ['locale' => $this->getLocale($request)]
         );
 
         return $this->handleView(
@@ -57,7 +57,7 @@ final class AkismetFormFieldController extends AbstractRestController implements
         $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(
             self::RESOURCE_KEY,
             ['id' => $id],
-            ['locale' => $request->getLocale()]
+            ['locale' => $this->getLocale($request)]
         );
 
         $formFields = $listRepresentation->getData();
