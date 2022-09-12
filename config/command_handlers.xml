@@ -7,6 +7,10 @@
             <tag name="messenger.message_handler" bus="verzameldwerk_akismet.command_bus"/>
         </defaults>
 
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\FindAkismetConfigurationCommandHandler">
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+        </service>
+
         <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\FindOrCreateAkismetConfigurationCommandHandler">
             <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
         </service>

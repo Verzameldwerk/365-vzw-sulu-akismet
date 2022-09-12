@@ -68,7 +68,7 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
         $this->requestRepository->add($akismetRequest)->shouldBeCalled();
 
         $command = new CreateAkismetRequestCommand(1, ['foo' => 'bar']);
-        $this->commandHandler->__invoke($command);
+        self::assertFalse($this->commandHandler->__invoke($command));
     }
 
     public function testInvokeResultSpam(): void
@@ -88,7 +88,7 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
         $this->requestRepository->add($akismetRequest)->shouldBeCalled();
 
         $command = new CreateAkismetRequestCommand(1, ['foo' => 'bar']);
-        $this->commandHandler->__invoke($command);
+        self::assertTrue($this->commandHandler->__invoke($command));
     }
 
     public function testInvokeResultDiscard(): void
@@ -108,7 +108,7 @@ class CreateAkismetRequestCommandHandlerTest extends TestCase
         $this->requestRepository->add($akismetRequest)->shouldBeCalled();
 
         $command = new CreateAkismetRequestCommand(1, ['foo' => 'bar']);
-        $this->commandHandler->__invoke($command);
+        self::assertTrue($this->commandHandler->__invoke($command));
     }
 
     public function testInvokeOtherResult(): void

@@ -39,7 +39,7 @@ abstract class ModelNotFoundException extends \Exception
                 $value = json_encode($value);
             }
 
-            if (!is_scalar($value)) {
+            if (!\is_scalar($value)) {
                 continue;
             }
 

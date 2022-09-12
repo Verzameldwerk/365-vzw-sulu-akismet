@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="verzameldwerk_akismet.spam_checker"
+                 class="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\SpamChecker">
+            <argument type="tagged" tag="verzameldwerk_akismet.spam_checker"/>
+        </service>
+        <service id="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\SpamCheckerInterface"
+                 alias="verzameldwerk_akismet.spam_checker"/>
+
+        <service id="verzameldwerk_akismet.honeypot_spam_checker"
+                 class="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\HoneypotSpamChecker">
+            <argument>%sulu_form.honeypot_field%</argument>
+            <argument>%sulu_form.honeypot_strategy%</argument>
+
+            <tag name="verzameldwerk_akismet.spam_checker"/>
+        </service>
+
+        <service id="verzameldwerk_akismet.akismet_spam_checker"
+                 class="Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\AkismetSpamChecker">
+            <argument type="service" id="verzameldwerk_akismet.command_bus"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_configuration_repository"/>
+            <argument type="service" id="verzameldwerk_akismet.akismet_params_resolver"/>
+            <argument type="service" id="monolog.logger" on-invalid="null"/>
+            <argument>%verzameldwerk_akismet.akismet_spam_strategy%</argument>
+            <argument>%kernel.debug%</argument>
+
+            <tag name="verzameldwerk_akismet.spam_checker"/>
+        </service>
+    </services>
+</container>

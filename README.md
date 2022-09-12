@@ -93,8 +93,8 @@ framework:
             sync: 'sync://'
 
         routing:
-            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\SynchronousMessageInterface: sync
-            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\AsynchronousMessageInterface: async
+            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\SynchronousMessageInterface: sync # this needs to be sync
+            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\AsynchronousMessageInterface: async # this can be either async or sync
 ```
 
 When using an asynchronous transport, you should have a look at
