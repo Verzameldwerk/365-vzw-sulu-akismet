@@ -1,2 +1,2 @@
 verzameldwerk_akismet:
-    akismet_spam_strategy: no_save
+    akismet_spam_strategy: no_save # or `no_email` or `spam` (default: `spam`)
