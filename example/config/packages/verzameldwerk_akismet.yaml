@@ -1,0 +1,2 @@
+verzameldwerk_akismet:
+    akismet_spam_strategy: no_save

@@ -99,7 +99,10 @@
     "autoload": {
         "psr-4": {
             "Verzameldwerk\\Bundle\\AkismetBundle\\": "src/"
-        }
+        },
+        "exclude-from-classmap": [
+            "/example/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
