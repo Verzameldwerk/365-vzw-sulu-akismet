@@ -6,6 +6,10 @@ sulu_form:
     media:
         protected: true
 
+    honeypot:
+        field: honeypot
+        strategy: no_save
+
 framework:
     esi: true
     fragments: true
