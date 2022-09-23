@@ -7,7 +7,7 @@ sulu_form:
         protected: true
 
     honeypot:
-        field: honeypot
+        field: HoneyPot
         strategy: no_save
 
 framework:

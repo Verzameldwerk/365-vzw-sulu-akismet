@@ -22,7 +22,7 @@ final class AkismetParamsResolver implements AkismetParamsResolverInterface
     ) {
         $this->akismetConfigurationRepository = $akismetConfigurationRepository;
         $this->requestStack = $requestStack;
-        $this->honeypotField = $honeypotField;
+        $this->honeypotField = str_replace(' ', '_', strtolower($honeypotField ?? ''));
     }
 
     public function resolve(FormInterface $form, int $suluFormId): array
