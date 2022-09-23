@@ -70,7 +70,7 @@ class AkismetParamsResolverTest extends TestCase
                 'content' => 'Lorem ipsum dolor sit amet',
             ]),
             'children' => [
-                'honeypotField' => $this->createForm(['data' => 'HONEYPOT']),
+                'honeypotfield' => $this->createForm(['data' => 'HONEYPOT']),
             ],
         ]);
 
@@ -86,8 +86,8 @@ class AkismetParamsResolverTest extends TestCase
                 'comment_author_email' => 'admin@example.com',
                 'comment_content' => 'Lorem ipsum dolor sit amet',
                 'blog_lang' => 'en',
-                'honeypot_field_name' => 'honeypotField',
-                'honeypotField' => 'HONEYPOT',
+                'honeypot_field_name' => 'honeypotfield',
+                'honeypotfield' => 'HONEYPOT',
             ],
             $this->paramsResolver->resolve($form, 1)
         );
@@ -112,7 +112,7 @@ class AkismetParamsResolverTest extends TestCase
                 'textarea' => 'Lorem ipsum dolor sit amet',
             ]),
             'children' => [
-                'honeypotField' => $this->createForm(['data' => 'HONEYPOT']),
+                'honeypotfield' => $this->createForm(['data' => 'HONEYPOT']),
             ],
         ]);
 
@@ -128,8 +128,8 @@ class AkismetParamsResolverTest extends TestCase
                 'comment_author_email' => 'admin@example.com',
                 'comment_content' => 'Lorem ipsum dolor sit amet',
                 'blog_lang' => 'en',
-                'honeypot_field_name' => 'honeypotField',
-                'honeypotField' => 'HONEYPOT',
+                'honeypot_field_name' => 'honeypotfield',
+                'honeypotfield' => 'HONEYPOT',
             ],
             $this->paramsResolver->resolve($form, 1)
         );
