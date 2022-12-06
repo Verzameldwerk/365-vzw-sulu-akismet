@@ -1,8 +1,3 @@
-# FosJsRoutingBundle
-fos_js_routing:
-    prefix: /admin
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
 # Sulu
 sulu_tag_api:
     type: rest

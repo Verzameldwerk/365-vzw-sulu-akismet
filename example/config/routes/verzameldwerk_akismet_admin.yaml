@@ -1,0 +1,4 @@
+verzameldwerk_akismet_api:
+    resource: "@VerzameldwerkAkismetBundle/config/routing_api.yml"
+    type: rest
+    prefix: /admin/api

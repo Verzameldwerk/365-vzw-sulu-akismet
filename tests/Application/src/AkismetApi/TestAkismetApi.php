@@ -15,6 +15,15 @@ class TestAkismetApi implements AkismetApiInterface
 
     public function checkComment(AkismetConfigurationInterface $configuration, array $params): string
     {
+        $content = $params['comment_content'];
+
+        switch ($content) {
+            case self::RESULT_SPAM:
+                return self::RESULT_SPAM;
+            case self::RESULT_DISCARD:
+                return self::RESULT_DISCARD;
+        }
+
         return self::RESULT_HAM;
     }
 

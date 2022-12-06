@@ -7,6 +7,7 @@ namespace Verzameldwerk\Bundle\AkismetBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\SpamCheckerInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfiguration;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetRequest;
 
@@ -16,6 +17,14 @@ final class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('verzameldwerk_akismet');
         $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->children()
+                ->enumNode('akismet_spam_strategy')
+                    ->values(SpamCheckerInterface::SPAM_STRATEGIES)
+                    ->defaultValue(SpamCheckerInterface::SPAM_STRATEGIES[0])
+                ->end()
+            ->end();
 
         $this->addObjectsSection($rootNode);
 

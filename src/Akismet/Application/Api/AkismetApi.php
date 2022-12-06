@@ -153,7 +153,7 @@ final class AkismetApi implements AkismetApiInterface
         $params = array_filter(
             array_map(
                 function ($value): ?string {
-                    return is_scalar($value) ? (string) $value : null;
+                    return \is_scalar($value) ? (string) $value : null;
                 },
                 $params
             ),
