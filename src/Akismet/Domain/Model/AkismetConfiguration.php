@@ -79,6 +79,7 @@ class AkismetConfiguration implements AkismetConfigurationInterface, AuditableIn
 
     /**
      * @Serializer\VirtualProperty
+     *
      * @Serializer\SerializedName("formId")
      */
     public function getFormId(): ?int
@@ -93,6 +94,7 @@ class AkismetConfiguration implements AkismetConfigurationInterface, AuditableIn
 
     /**
      * @Serializer\VirtualProperty
+     *
      * @Serializer\SerializedName("authorNameField")
      */
     public function getAuthorNameFieldId(): ?int
@@ -112,6 +114,7 @@ class AkismetConfiguration implements AkismetConfigurationInterface, AuditableIn
 
     /**
      * @Serializer\VirtualProperty
+     *
      * @Serializer\SerializedName("authorEmailField")
      */
     public function getAuthorEmailFieldId(): ?int
@@ -131,6 +134,7 @@ class AkismetConfiguration implements AkismetConfigurationInterface, AuditableIn
 
     /**
      * @Serializer\VirtualProperty
+     *
      * @Serializer\SerializedName("contentField")
      */
     public function getContentFieldId(): ?int
