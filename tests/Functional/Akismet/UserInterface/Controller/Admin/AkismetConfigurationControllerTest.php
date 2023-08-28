@@ -64,8 +64,13 @@ class AkismetConfigurationControllerTest extends SuluTestCase
 
     public function testGetAction(): void
     {
-        $this->client->jsonRequest('GET', '/admin/api/akismet-configuration/1');
-        $this->assertHttpStatusCode(404, $this->client->getResponse());
+        $akismetConfiguration = $this->createAkismetConfiguration();
+        $this->entityManager->flush();
+        $akismetConfigurationId = $this->getPrivateProperty($akismetConfiguration, 'id');
+        $this->entityManager->clear();
+
+        $this->client->jsonRequest('GET', '/admin/api/akismet-configuration/'.$akismetConfigurationId);
+        $this->assertHttpStatusCode(200, $this->client->getResponse());
     }
 
     public function testPutAction(): void

@@ -8,6 +8,7 @@ use HandcraftedInTheAlps\Bundle\SuluResourceBundle\HandcraftedInTheAlpsSuluResou
 use Sulu\Bundle\AudienceTargetingBundle\SuluAudienceTargetingBundle;
 use Sulu\Bundle\FormBundle\SuluFormBundle;
 use Sulu\Bundle\TestBundle\Kernel\SuluTestKernel;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Verzameldwerk\Bundle\AkismetBundle\VerzameldwerkAkismetBundle;
 
@@ -39,6 +40,11 @@ class Kernel extends SuluTestKernel
 
         if ('test' === $this->getEnvironment()) {
             $loader->load(__DIR__.'/config/services_test.yml');
+        }
+
+        $parameters = $this->getKernelParameters();
+        if (isset($parameters['kernel.bundles'][SwiftmailerBundle::class])) {
+            $loader->load(__DIR__.'/config/swiftmailer.yml'); // @deprecated
         }
     }
 }

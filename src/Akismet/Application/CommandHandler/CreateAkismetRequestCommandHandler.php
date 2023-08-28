@@ -26,7 +26,7 @@ final class CreateAkismetRequestCommandHandler implements MessageHandlerInterfac
         $this->api = $api;
     }
 
-    public function __invoke(CreateAkismetRequestCommand $command): void
+    public function __invoke(CreateAkismetRequestCommand $command): bool
     {
         $formId = $command->getFormId();
         $params = $command->getParams();
@@ -50,5 +50,7 @@ final class CreateAkismetRequestCommandHandler implements MessageHandlerInterfac
 
         $akismetRequest = $this->requestRepository->create($akismetConfiguration, $params, $spam);
         $this->requestRepository->add($akismetRequest);
+
+        return $spam;
     }
 }

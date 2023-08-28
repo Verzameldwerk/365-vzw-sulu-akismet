@@ -16,9 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\DeleteAkismetConfigurationCommand;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\FindAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\FindOrCreateAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\UpdateAkismetConfigurationCommand;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\DeleteAkismetConfigurationCommandHandler;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\CommandHandler\FindAkismetConfigurationCommandHandler;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface;
 use Webmozart\Assert\Assert;
 
@@ -61,7 +63,16 @@ final class AkismetConfigurationController extends AbstractRestController implem
      */
     public function getAction(int $id): Response
     {
-        return new Response('', Response::HTTP_NOT_FOUND);
+        /* @see FindAkismetConfigurationCommandHandler::__invoke() */
+        $akismetConfiguration = $this->handle(
+            new FindAkismetConfigurationCommand($id)
+        );
+
+        Assert::isInstanceOf($akismetConfiguration, AkismetConfigurationInterface::class);
+
+        return $this->handleView(
+            $this->view($akismetConfiguration)
+        );
     }
 
     public function putAction(Request $request, int $id): Response

@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\SpamChecker\SpamCheckerInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Exception\ModelNotFoundException;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetConfigurationInterface;
 use Verzameldwerk\Bundle\AkismetBundle\Akismet\Domain\Model\AkismetRequestInterface;
@@ -126,9 +127,12 @@ final class VerzameldwerkAkismetExtension extends Extension implements PrependEx
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('verzameldwerk_akismet.akismet_spam_strategy', $config['akismet_spam_strategy']);
+
         $this->configurePersistence($config['objects'], $container);
         $this->loadServices($container);
         $this->registerMessageBusWithFlushMiddleware($container, 'verzameldwerk_akismet.command_bus');
+        $this->registerInterfacesForAutoconfiguration($container);
     }
 
     private function loadServices(ContainerBuilder $container): void
@@ -142,5 +146,12 @@ final class VerzameldwerkAkismetExtension extends Extension implements PrependEx
         $loader->load('form.xml');
         $loader->load('repositories.xml');
         $loader->load('resolvers.xml');
+        $loader->load('spam_checkers.xml');
+    }
+
+    private function registerInterfacesForAutoconfiguration(ContainerBuilder $container): void
+    {
+        $container->registerForAutoconfiguration(SpamCheckerInterface::class)
+            ->addTag('verzameldwerk_akismet.spam_checker');
     }
 }

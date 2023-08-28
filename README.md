@@ -68,6 +68,8 @@ When asked to overwrite your local version of "package.json", answer with no.
 8. Update your database schema using `bin/console doctrine:schema:update --force`
 or generate a migration using `bin/console doctrine:migrations:diff` if you are using the `DoctrineMigrationsBundle`.
 
+10. Enable akimet in the role 'admin'
+
 ## Configuration
 
 By default, no additional configuration is necessary.
@@ -86,8 +88,8 @@ framework:
             sync: 'sync://'
 
         routing:
-            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\SynchronousMessageInterface: sync
-            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\AsynchronousMessageInterface: async
+            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\SynchronousMessageInterface: sync # this needs to be sync
+            Verzameldwerk\Bundle\AkismetBundle\Akismet\Application\Command\AsynchronousMessageInterface: async # this can be either async or sync
 ```
 
 When using an asynchronous transport, you should have a look at

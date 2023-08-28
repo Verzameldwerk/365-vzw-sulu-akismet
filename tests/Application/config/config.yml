@@ -1,6 +1,3 @@
-swiftmailer:
-    disable_delivery:  true
-
 # custom
 sulu_form:
     mail:
