@@ -22,7 +22,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->enumNode('akismet_spam_strategy')
                     ->values(SpamCheckerInterface::SPAM_STRATEGIES)
-                    ->defaultValue(SpamCheckerInterface::SPAM_STRATEGIES[0])
+                    ->defaultValue(SpamCheckerInterface::SPAM_STRATEGIES[2])
                 ->end()
             ->end();
 
