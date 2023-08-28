@@ -23,8 +23,15 @@ jobs:
 
                     - php-version: '8.0'
                       dependency-versions: 'highest'
-                      coverage: true
+                      coverage: false
 
+                    - php-version: '8.1'
+                      dependency-versions: 'highest'
+                      coverage: false
+
+                    - php-version: '8.2'
+                      dependency-versions: 'highest'
+                      coverage: true
         services:
             mysql:
                 image: mysql:8.0
