@@ -1,1 +1,0 @@
-import 'verzameldwerk-akismet-bundle';
