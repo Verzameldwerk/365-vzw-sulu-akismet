@@ -29,7 +29,7 @@ final class AkismetFormFieldController extends AbstractRestController implements
     public function __construct(
         DoctrineListRepresentationFactoryInterface $doctrineListRepresentationFactory,
         ViewHandlerInterface $viewHandler,
-        ?TokenStorageInterface $tokenStorage = null
+        TokenStorageInterface $tokenStorage = null
     ) {
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
 

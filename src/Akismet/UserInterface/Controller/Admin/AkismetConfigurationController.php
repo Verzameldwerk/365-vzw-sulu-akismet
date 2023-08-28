@@ -34,7 +34,7 @@ final class AkismetConfigurationController extends AbstractRestController implem
     public function __construct(
         MessageBusInterface $messageBus,
         ViewHandlerInterface $viewHandler,
-        ?TokenStorageInterface $tokenStorage = null
+        TokenStorageInterface $tokenStorage = null
     ) {
         $this->messageBus = $messageBus;
 

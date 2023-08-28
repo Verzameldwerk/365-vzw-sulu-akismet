@@ -36,7 +36,7 @@ final class AkismetRequestController extends AbstractRestController implements C
         DoctrineListRepresentationFactoryInterface $doctrineListRepresentationFactory,
         MessageBusInterface $messageBus,
         ViewHandlerInterface $viewHandler,
-        ?TokenStorageInterface $tokenStorage = null
+        TokenStorageInterface $tokenStorage = null
     ) {
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
         $this->messageBus = $messageBus;
