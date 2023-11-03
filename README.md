@@ -95,3 +95,18 @@ framework:
 When using an asynchronous transport, you should have a look at
 https://symfony.com/doc/current/messenger.html#consuming-messages-running-the-worker
 to learn about how to consume the messages and setting it up in production.
+
+:warning: If you end up with a message about ckeditor-duplicate-modules, you might need to add chkeditor to the exception at step 6, the javascript should look as followed
+```javascript
+config.module.rules.unshift({
+        test: /\.js$/,
+        exclude: /node_modules[/\\](?!(verzameldwerk-akismet-bundle|ckeditor5)[/\\])/,
+        use: {
+            loader: 'babel-loader',
+            options: {
+                cacheDirectory: true,
+                cacheCompression: false,
+            },
+        },
+    });
+```
