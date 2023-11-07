@@ -71,8 +71,11 @@ or generate a migration using `bin/console doctrine:migrations:diff` if you are 
 10. Enable akimet in the role 'admin'
 
 ## Configuration
-
-By default, no additional configuration is necessary.
+Put the following in config/packages/verzameldwerk_akismet.yaml to stop the spam:
+```yaml
+verzameldwerk_akismet:
+    akismet_spam_strategy: no_email
+```
 
 If you want the Akismet `comment-check` request to happen asynchronously, configure the Symfony Messenger component like in the following example:
 
